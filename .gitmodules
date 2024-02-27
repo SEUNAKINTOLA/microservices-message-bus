@@ -1,0 +1,6 @@
+[submodule "notifications-service"]
+	path = notifications-service
+	url = ./notifications-service/
+[submodule "users-service"]
+	path = users-service
+	url = ./users-service/
