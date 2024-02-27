@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+  users-service:
+    build: ./users-service
+    ports:
+      - "8000:8000"
+    environment:
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/database/sqlite/usersdb.sqlite
+      REDIS_HOST: redis
+    volumes:
+      - ./users-service:/var/www
+    networks:
+      - my_network
+    depends_on:
+      - rabbitmq
+
+  notifications-service:
+    build: ./notifications-service
+    environment:
+      REDIS_HOST: redis
+    volumes:
+      - ./notifications-service:/var/www
+    networks:
+      - my_network
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - my_network
+
+networks:
+  my_network:
