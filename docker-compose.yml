@@ -7,7 +7,11 @@ services:
     environment:
       DB_CONNECTION: sqlite
       DB_DATABASE: /var/www/database/sqlite/usersdb.sqlite
-      REDIS_HOST: redis
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
     volumes:
       - ./users-service:/var/www
     networks:
@@ -18,7 +22,11 @@ services:
   notifications-service:
     build: ./notifications-service
     environment:
-      REDIS_HOST: redis
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      RABBITMQ_VHOST: /
     volumes:
       - ./notifications-service:/var/www
     networks:
